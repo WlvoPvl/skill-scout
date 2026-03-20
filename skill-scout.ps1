@@ -21,7 +21,12 @@ if (-not (Test-Path $INDEX_FILE)) {
     exit 1
 }
 
-$index = Get-Content $INDEX_FILE -Raw | ConvertFrom-Json
+try {
+    $index = Get-Content $INDEX_FILE -Raw | ConvertFrom-Json
+} catch {
+    Write-Host "❌ 索引文件格式错误: $($_.Exception.Message)" -ForegroundColor Red
+    exit 1
+}
 $skills = $index.skills
 
 # ─── 工具函数 ────────────────────────────────────────────────────────────
@@ -152,8 +157,8 @@ switch ($Command) {
         }
 
         $names = $Args
-        $compareSkills = $names | ForEach-Object {
-            $skills | Where-Object { $_.name -eq $_ -or $_.name.ToLower() -eq $_.ToLower() }
+        $compareSkills = foreach ($name in $names) {
+            $skills | Where-Object { $_.name -eq $name -or $_.name.ToLower() -eq $name.ToLower() }
         }
 
         Write-Host ""
@@ -206,7 +211,7 @@ switch ($Command) {
         Write-Host "─────────────────────────────────────────────────"
         Write-Host ""
 
-        $scenarios = @{
+        $scenarios = [ordered]@{
             "我每天要管理很多任务"        = @("things-mac", "apple-reminders")
             "我要整理笔记和知识库"         = @("obsidian", "bear-notes")
             "我要处理邮件"                = @("himalaya", "email-manager")
