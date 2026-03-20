@@ -157,16 +157,21 @@ switch ($Command) {
         }
 
         $names = $Args
-        $compareSkills = foreach ($name in $names) {
-            $skills | Where-Object { $_.name -eq $name -or $_.name.ToLower() -eq $name.ToLower() }
+        $matched = foreach ($n in $names) {
+            $skills | Where-Object { $_.name -eq $n -or $_.name.ToLower() -eq $n.ToLower() }
+        }
+        $matched = @($matched)  # 确保是数组
+
+        if ($matched.Count -eq 0) {
+            Write-Host "❌ 没有找到任何匹配的 Skill: $($names -join ', ')" -ForegroundColor Red
+            exit 1
         }
 
         Write-Host ""
         Write-Host "⚖️  Skill 对比" -ForegroundColor Green
         Write-Host ""
 
-        $compareSkills | ForEach-Object {
-            $s = $_
+        foreach ($s in $matched) {
             Write-Host "┌─ $($s.emoji) $($s.display_name)" -ForegroundColor Cyan
             Write-Host "│  质量: $( '⭐' * $s.quality_score ) ($($s.quality_score)/5)"
             Write-Host "│  平台: $($s.platform)"
@@ -178,7 +183,7 @@ switch ($Command) {
         }
 
         # 推荐结论
-        $best = ($compareSkills | Sort-Object quality_score -Descending)[0]
+        $best = ($matched | Sort-Object quality_score -Descending)[0]
         Write-Host "✅ 推荐: $($best.display_name)" -ForegroundColor Green
         Write-Host "   理由: 质量评分最高 ($($best.quality_score)/5) - $($best.monetization)"
     }
