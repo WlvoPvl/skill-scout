@@ -1,88 +1,101 @@
 # Skill Scout 🔍
 
-> 发现、评测、推荐 OpenClaw Skills 的智能引擎
+> OpenClaw Skills 发现、评测、推荐的智能引擎 — 28个第一手实测数据
 
-[![Stars](https://img.shields.io/github/stars/skill-scout/skill-scout?style=social)](https://github.com/skill-scout/skill-scout)
+[![Stars](https://img.shields.io/github/stars/WlvoPvl/skill-scout?style=social)](https://github.com/WlvoPvl/skill-scout)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 痛点
 
 OpenClaw 有 **121+ 个 Skills**，但：
-- ❌ Clawhub 无搜索、无推荐
-- ❌ 不知道哪个 skill 适合自己的场景
+- ❌ 没有场景化搜索（Clawhub 是仓库，不是推荐引擎）
+- ❌ 不知道哪个 skill 适合自己的需求
 - ❌ 装了不好用，不知道替代方案
-- ❌ 优质 skill 淹没在噪音里
+- ❌ 优质 skill 淹没在噪音里，评测数据分散
 
 ## 解决方案
 
-Skill Scout = **结构化 Skill 数据库 + 推荐引擎**
+**Skill Scout = 结构化评测数据库 + 场景化推荐引擎**
 
 | 功能 | 免费版 | Pro 版 |
 |------|--------|--------|
-| Skill 索引浏览 | ✅ | ✅ |
+| Skill 索引浏览（28个已评测） | ✅ | ✅ |
 | 场景化推荐 | ✅ | ✅ |
 | 安装命令生成 | ✅ | ✅ |
-| AI 深度对比 | ❌ | ✅ |
-| 个性化配置咨询 | ❌ | ✅ |
+| AI 深度对比 + 决策报告 | ❌ | ✅ |
+| 一对一配置咨询 | ❌ | ✅ |
 
 ## 快速开始
 
 ```powershell
-# 查询适合的场景的 skill
+# 按场景搜索
 .\skill-scout.ps1 find "日程管理"
 
-# 查看 skill 详情
+# 查看详情
 .\skill-scout.ps1 info things-mac
 
 # 竞品对比
 .\skill-scout.ps1 compare "apple-reminders" "things-mac"
+
+# 交互式推荐
+.\skill-scout.ps1 recommend
 ```
+
+**示例输出：**
+```
+🔍 搜索『邮件』- 找到 2 个结果
+
+  📧 Himalaya  [himalaya]
+  ──────────────────────────────────────────
+  ⭐ 质量: ⭐⭐⭐⭐⭐ (5/5)   💰 变现: 中
+  📝 全平台邮件 CLI 最优解，支持多账户+MML 撰写
+  🔗 替代: email-manager
+```
+
+## 评分标准（5分制）
+
+| 维度 | 说明 |
+|------|------|
+| 质量 | 功能完整度 + 稳定性 + 实际效果 |
+| 易安装 | 配置复杂度（1=难，5=开箱即用） |
+| 平台 | 支持广度 |
+| 变现 | 目标用户付费意愿 |
 
 ## 支持的场景
 
 | 场景 | 推荐 Skills |
 |------|------------|
 | 日历/任务管理 | `things-mac`, `apple-reminders` |
-| 笔记整理 | `apple-notes`, `bear-notes`, `obsidian` |
+| 笔记整理 | `obsidian`, `bear-notes`, `apple-notes` |
 | 邮件处理 | `himalaya`, `email-manager` |
 | 代码开发 | `coding-agent`, `github` |
-| AI 搜索 | `web_search`, `gog` (Gmail/Calendar) |
-| 自动化 | `tmux`, `sonoscli`, `blucli` |
-| 文件管理 | `file-manager` |
+| AI 搜索 | `web_search`, `gog` |
+| 自动化 | `tmux`, `cron-helper`, `file-manager` |
+| 智能家居 | `sonoscli`, `blucli` |
 | 社交媒体 | `douyin-messager`, `imsg` |
 | 飞书集成 | `feishu-doc`, `feishu-wiki`, `feishu-drive` |
 | 出行 | `mcporter-railway-query` |
-| 健康/监控 | `healthcheck` |
 | 内容创作 | `audiopod`, `IMA Studio Image Generation` |
 | 视频学习 | `bilibili-video-analyzer` |
-| 定时任务 | `cron-helper` |
+| 安全/部署 | `healthcheck`, `render` |
+
+## 数据来源
+
+- 🏠 **第一手实测**：作者日常使用评测
+- 🌐 **社区智慧**：InStreet Agent 社区真实反馈
+- 📦 **Clawhub**：clawhub.com 公开数据
 
 ## 项目结构
 
 ```
 skill-scout/
 ├── skill-scout.ps1      # CLI 推荐引擎
-├── skills-index.json    # Skill 数据库
+├── skills-index.json    # Skill 评测数据库
 ├── README.md
-├── CONTRIBUTING.md
-└── LICENSE
+├── LICENSE              # MIT
+└── .gitignore
 ```
-
-## 数据来源
-
-- 第一手评测：作者实际使用过的 skill
-- 社区反馈：InStreet Agent 社区真实评价
-- Clawhub 索引：clawhub.com 公开数据
-
-## 如何贡献
-
-发现优质 skill 或有评测数据？欢迎 PR：
-1. Fork 本仓库
-2. 更新 `skills-index.json`
-3. 提交 PR，带上使用体验
-
-详见 [CONTRIBUTING.md](CONTRIBUTING.md)
 
 ## License
 
-MIT © Skill Scout
+MIT © Skill Scout | 欢迎 Fork 和贡献
